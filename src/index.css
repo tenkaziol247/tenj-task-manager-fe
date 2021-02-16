@@ -1,13 +1,119 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 14px;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    height: 560px;
+    margin: auto;
+    box-sizing: border-box;
+    border-radius: 12px;
+    box-shadow: -3px 3px 8px 3px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.avatar--default {
+    background-image: url('./assets/image/user-avatar.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+.circle--skeleton {
+    background-color: #ccc;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.circle--skeleton::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -20px;
+    width: 8px;
+    height: 120%;
+    background-color: white;
+    transform: skewX(-30deg);
+    animation: moveLight 1s 0.2s ease-out infinite running;
+}
+
+@keyframes moveLight {
+    from {
+        left: -20px;
+    }
+    to {
+        left: 120%;
+    }
+}
+
+.background--spring {
+    background-image: url('./assets/image/spring.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+.background--summer {
+    background-image: url('./assets/image/summer.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+.background--fall {
+    background-image: url('./assets/image/fall.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+.background--winter {
+    background-image: url('./assets/image/winter.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
 }
