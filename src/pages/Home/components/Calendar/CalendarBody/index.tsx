@@ -1,9 +1,13 @@
-import { makeStyles, TableCell, TableRow, Theme } from '@material-ui/core';
+import { Box, makeStyles, TableCell, TableRow, Theme } from '@material-ui/core';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TRootState } from '../../../../../store';
 import { ITask } from '../../../../../store/task/task.type';
 import moment from 'moment';
+import {
+    selectDate,
+    clearSelectedDate,
+} from '../../../../../store/task/action';
 
 interface Props {
     momentContext: moment.Moment;
@@ -14,9 +18,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     row: {
         '& .MuiTableCell-body': {
             color: theme.palette.common.white,
+            [theme.breakpoints.down('xs')]: {
+                padding: '8px',
+            },
         },
     },
-    emptyCell: {},
     dayCell: {
         cursor: 'pointer',
         display: 'inline-block',
@@ -25,21 +31,47 @@ const useStyles = makeStyles((theme: Theme) => ({
         lineHeight: '30px',
         borderRadius: '50%',
         position: 'relative',
-    },
-    todayCell: {
-        backgroundColor: theme.palette.info.light,
-    },
-    hasTask: {
+        border: `2px solid transparent`,
+        [theme.breakpoints.down('xs')]: {
+            width: '20px',
+            height: '20px',
+            lineHeight: '20px',
+        },
         '&:after': {
             content: '""',
             position: 'absolute',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            height: '104%',
-            width: '104%',
+            height: '100%',
+            width: '100%',
             borderRadius: '50%',
-            border: `1px solid ${theme.palette.common.white}`,
+        },
+        '&:hover': {
+            '&:after': {
+                backgroundColor: theme.palette.action.hover,
+            },
+        },
+    },
+    todayCell: {
+        backgroundColor: theme.palette.info.light,
+    },
+    hasTask: {
+        '&:after': {
+            border: `2px solid ${theme.palette.common.white}`,
+        },
+    },
+    selectedCell: {
+        '&:before': {
+            content: '""',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            height: '108%',
+            width: '108%',
+            borderRadius: '50%',
+            border: `3px solid ${theme.palette.error.main}`,
         },
     },
 }));
@@ -47,7 +79,24 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const CalendarBody: React.FC<Props> = ({ momentContext, today }) => {
     const classes = useStyles();
 
-    const { list } = useSelector((state: TRootState) => state.task);
+    const dispatch = useDispatch();
+    const { list, selectedDate } = useSelector(
+        (state: TRootState) => state.task,
+    );
+
+    const handleDateClick = (date: moment.Moment) => {
+        if (selectedDate) {
+            const isSelectedDate = date.isSame(moment(selectedDate), 'day');
+
+            if (isSelectedDate) {
+                dispatch(clearSelectedDate());
+            } else {
+                dispatch(selectDate(date));
+            }
+        } else {
+            dispatch(selectDate(date));
+        }
+    };
 
     const renderDaysInMonth = () => {
         //generate empty cell
@@ -61,10 +110,12 @@ export const CalendarBody: React.FC<Props> = ({ momentContext, today }) => {
         for (let i = 1; i <= momentContext.daysInMonth(); i++) {
             const totalClasses = [classes.dayCell];
 
+            //add class today
             if (today.isSame(momentContext.date(i), 'day')) {
                 totalClasses.push(classes.todayCell);
             }
 
+            //add classs day has task
             const isHasTask = list.some((task: ITask) =>
                 momentContext.date(i).isSame(moment(task.date.endAt), 'day'),
             );
@@ -72,9 +123,27 @@ export const CalendarBody: React.FC<Props> = ({ momentContext, today }) => {
                 totalClasses.push(classes.hasTask);
             }
 
+            //add class selected date
+            if (selectedDate) {
+                const isSelectedDate = momentContext
+                    .date(i)
+                    .isSame(moment(selectedDate), 'day');
+                if (isSelectedDate) {
+                    totalClasses.push(classes.selectedCell);
+                }
+            }
+
             daysInMonth.push(
                 <TableCell key={i * 100}>
-                    <span className={totalClasses.join(' ')}>{i}</span>
+                    <Box
+                        component='span'
+                        className={totalClasses.join(' ')}
+                        onClick={() =>
+                            handleDateClick(moment(momentContext.date(i)))
+                        }
+                    >
+                        {i}
+                    </Box>
                 </TableCell>,
             );
         }

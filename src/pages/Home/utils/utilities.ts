@@ -75,5 +75,5 @@ export const getWeekdaysShort = () => {
 };
 
 export const getMonths = () => {
-    return moment.months();
+    return moment.monthsShort();
 };

@@ -7,6 +7,7 @@ import {
     LinearProgress,
     makeStyles,
     Paper,
+    Slide,
     Theme,
     Typography,
     withStyles,
@@ -96,7 +97,13 @@ export const Task: React.FC<Props> = ({ task }) => {
 
     return (
         <>
-            <Fade in={Boolean(task)} timeout={400}>
+            <Slide
+                in={Boolean(task)}
+                timeout={200}
+                direction='left'
+                mountOnEnter
+                unmountOnExit
+            >
                 <Paper
                     variant='outlined'
                     className={[
@@ -147,7 +154,7 @@ export const Task: React.FC<Props> = ({ task }) => {
                         <DifficultyLevel task={task} />
                     </Box>
                 </Paper>
-            </Fade>
+            </Slide>
             <TransitionsModal
                 open={openView}
                 handleCloseModal={handleCloseViewModal}

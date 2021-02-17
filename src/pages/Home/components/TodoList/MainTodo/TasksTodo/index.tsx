@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, makeStyles, Theme } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 import { TRootState } from '../../../../../../store';
 import { EmptyScreen } from './EmptyScreen';
 import { Ellipse } from '../../../../../../components/Loader/Ellipse';
 import { Task } from './Task';
 import { ToolbarTodo } from './ToolbarTodo';
+import { ITask } from '../../../../../../store/task/task.type';
 
 interface Props {
     handleOpenModal: () => void;
@@ -25,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     roller: {
         overflowY: 'auto',
+        overflowX: 'hidden',
         height: '360px',
         boxSizing: 'border-box',
     },
@@ -55,8 +58,25 @@ export const TasksTodo: React.FC<Props> = ({
     toggleToolbarTodo,
 }) => {
     const classes = useStyles({ toggleToolbarTodo });
+    const [list, setList] = useState<ITask[]>([]);
 
-    const { list, loading } = useSelector((state: TRootState) => state.task);
+    const { list: listOrigin, loading, selectedDate } = useSelector(
+        (state: TRootState) => state.task,
+    );
+
+    useEffect(() => {
+        if (selectedDate) {
+            const tempList = listOrigin.filter((task: ITask) => {
+                return moment(selectedDate).isSame(
+                    moment(task.date.endAt),
+                    'day',
+                );
+            });
+            setList(tempList);
+        } else {
+            setList([...listOrigin]);
+        }
+    }, [selectedDate, listOrigin]);
 
     const renderTasks = (): JSX.Element[] | JSX.Element => {
         if (list.length === 0) {

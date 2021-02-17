@@ -1,4 +1,4 @@
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, makeStyles, Slide } from '@material-ui/core';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -8,6 +8,10 @@ import { CreateTaskButton } from '../ModalScreen/CreateTask/CreateTaskButton';
 import { CreateTaskScreen } from '../ModalScreen/CreateTask/CreateTaskScreen';
 import { HeaderTodo } from './HeaderTodo';
 import { MainTodo } from './MainTodo';
+
+interface Props {
+    isLayerCalendar: boolean;
+}
 
 const useStyles = makeStyles((theme) => ({
     box: {
@@ -25,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const TodoList: React.FC = () => {
+export const TodoList: React.FC<Props> = ({ isLayerCalendar }) => {
     const classes = useStyles();
 
     const [open, setOpen] = React.useState(false);
@@ -42,18 +46,28 @@ export const TodoList: React.FC = () => {
     };
 
     return (
-        <Box className={classes.box}>
-            <HeaderTodo />
-            <MainTodo handleOpenModal={handleOpenModalCreateTask} />
-            <Box className={classes.button}>
-                <CreateTaskButton handleOpenModal={handleOpenModalCreateTask} />
-                <TransitionsModal
-                    open={open}
-                    handleCloseModal={handleCloseModalCreateTask}
-                >
-                    <CreateTaskScreen />
-                </TransitionsModal>
+        <Slide
+            in={!isLayerCalendar}
+            timeout={{ appear: 300, enter: 900, exit: 300 }}
+            direction='left'
+            mountOnEnter
+            unmountOnExit
+        >
+            <Box className={classes.box}>
+                <HeaderTodo />
+                <MainTodo handleOpenModal={handleOpenModalCreateTask} />
+                <Box className={classes.button}>
+                    <CreateTaskButton
+                        handleOpenModal={handleOpenModalCreateTask}
+                    />
+                    <TransitionsModal
+                        open={open}
+                        handleCloseModal={handleCloseModalCreateTask}
+                    >
+                        <CreateTaskScreen />
+                    </TransitionsModal>
+                </Box>
             </Box>
-        </Box>
+        </Slide>
     );
 };

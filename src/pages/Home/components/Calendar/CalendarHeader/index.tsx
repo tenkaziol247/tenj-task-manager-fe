@@ -6,6 +6,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     row: {
         '& .MuiTableCell-root': {
             padding: '16px 16px 20px',
+            [theme.breakpoints.down('xs')]: {
+                padding: '16px 8px 16px',
+            },
         },
         '& .MuiTableCell-body': {
             color: theme.palette.info.light,

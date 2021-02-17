@@ -8,6 +8,7 @@ import {
 import { actionTypes } from './actionTypes';
 import {
     IClearIndication,
+    IClearSelectedDate,
     ICreateTaskFailure,
     ICreateTaskStart,
     ICreateTaskSuccess,
@@ -21,6 +22,7 @@ import {
     IFetchTasksFailure,
     IFetchTasksStart,
     IFetchTasksSuccess,
+    ISelectDate,
     ITask,
     ITaskClearAll,
     IUpdateTaskFailure,
@@ -265,5 +267,22 @@ export const deleteTasksCompleted = () => {
             .catch((error) => {
                 dispatch(deleteTasksCompletedFailure(error));
             });
+    };
+};
+
+//select date
+export const selectDate = (date: moment.Moment | Date): ISelectDate => {
+    return {
+        type: actionTypes.SELECT_DATE,
+        payload: {
+            date,
+        },
+    };
+};
+
+//clear selected date
+export const clearSelectedDate = (): IClearSelectedDate => {
+    return {
+        type: actionTypes.CLEAR_SELECTED_DATE,
     };
 };

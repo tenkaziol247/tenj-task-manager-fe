@@ -26,6 +26,7 @@ export interface ITasksInitState {
     loading: boolean;
     error: IError | null;
     indication: string | null;
+    selectedDate: moment.Moment | Date | null;
 }
 
 export interface ITaskClearAll {
@@ -123,6 +124,17 @@ export interface IDeleteTasksCompletedFailure {
     };
 }
 
+export interface ISelectDate {
+    type: typeof actionTypes.SELECT_DATE;
+    payload: {
+        date: moment.Moment | Date;
+    };
+}
+
+export interface IClearSelectedDate {
+    type: typeof actionTypes.CLEAR_SELECTED_DATE;
+}
+
 export type TasksAction =
     | IClearIndication
     | ITaskClearAll
@@ -140,4 +152,6 @@ export type TasksAction =
     | IDeleteTaskFailure
     | IDeleteTasksCompletedStart
     | IDeleteTasksCompletedSuccess
-    | IDeleteTasksCompletedFailure;
+    | IDeleteTasksCompletedFailure
+    | ISelectDate
+    | IClearSelectedDate;

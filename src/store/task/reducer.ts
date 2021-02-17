@@ -22,6 +22,8 @@ import {
     IDeleteTasksCompletedStart,
     IDeleteTasksCompletedFailure,
     ITaskClearAll,
+    ISelectDate,
+    IClearSelectedDate,
 } from './task.type';
 
 const initialState = {
@@ -29,6 +31,7 @@ const initialState = {
     loading: false,
     error: null,
     indication: '',
+    selectedDate: null,
 };
 
 const updateObject = (
@@ -39,6 +42,7 @@ const updateObject = (
         loading?: boolean;
         error?: IError | null;
         indication?: string;
+        selectedDate?: moment.Moment | Date | null;
     },
 ) => {
     return { ...oldState, ...newProperties };
@@ -161,6 +165,7 @@ const tasksClearAll = (state: ITasksInitState, action: ITaskClearAll) => {
         loading: false,
         error: null,
         indication: '',
+        selectedDate: null,
     });
 };
 
@@ -311,6 +316,17 @@ const tasksDeleteTasksCompletedFailure = (
     return updateObject(state, { loading: false, error: action.payload.error });
 };
 
+const tasksSelectDate = (state: ITasksInitState, action: ISelectDate) => {
+    return updateObject(state, { selectedDate: action.payload.date });
+};
+
+const tasksClearSelectedDate = (
+    state: ITasksInitState,
+    action: IClearSelectedDate,
+) => {
+    return updateObject(state, { selectedDate: null });
+};
+
 //Reducer
 export const taskReducer = (
     state: ITasksInitState = initialState,
@@ -351,6 +367,10 @@ export const taskReducer = (
             return tasksDeleteTasksCompletedSuccess(state, action);
         case actionTypes.DELETE_TASKS_COMPLETED_FAILURE:
             return tasksDeleteTasksCompletedFailure(state, action);
+        case actionTypes.SELECT_DATE:
+            return tasksSelectDate(state, action);
+        case actionTypes.CLEAR_SELECTED_DATE:
+            return tasksClearSelectedDate(state, action);
         default:
             return state;
     }
