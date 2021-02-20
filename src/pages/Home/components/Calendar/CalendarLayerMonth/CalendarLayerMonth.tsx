@@ -31,7 +31,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     thisMonth: {
         backgroundColor: theme.palette.info.light,
     },
-    quarter: {},
+    quarter: {
+        '& .MuiTableCell-body': {
+            color: theme.palette.common.white,
+        },
+    },
 }));
 
 export const CalendarLayerMonth: React.FC<Props> = ({
