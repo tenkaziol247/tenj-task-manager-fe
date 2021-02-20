@@ -1,12 +1,9 @@
-import {
-    AxiosError,
-    AxiosInstance,
-    AxiosRequestConfig,
-    AxiosResponse,
-} from 'axios';
+import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import { useState, useEffect } from 'react';
 
-export const useAxiosErrorHandler = (client: AxiosInstance) => {
+type Result = [AxiosError | null, () => void];
+
+export const useAxiosErrorHandler = (client: AxiosInstance): Result => {
     const [error, setError] = useState<AxiosError | null>(null);
 
     const reqInterceptors = client.interceptors.request.use(
@@ -38,7 +35,7 @@ export const useAxiosErrorHandler = (client: AxiosInstance) => {
         };
     }, [reqInterceptors, resInterceptors, client]);
 
-    const errorConfirmHandler = () => {
+    const errorConfirmHandler = (): void => {
         setError(null);
     };
 

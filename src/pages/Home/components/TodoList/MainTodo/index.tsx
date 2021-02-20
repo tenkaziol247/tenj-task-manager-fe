@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { WelcomeTodo } from './WelcomeTodo';
 import { ActionsTodo } from './ActionsTodo';
 import { TasksTodo } from './TasksTodo';
+import { Box } from '@material-ui/core';
 
 interface Props {
     handleOpenModal: () => void;
@@ -16,7 +17,7 @@ export const MainTodo: React.FC<Props> = ({ handleOpenModal }) => {
     };
 
     return (
-        <div className='mainTodo'>
+        <Box className='mainTodo' height='88%'>
             <WelcomeTodo />
             <ActionsTodo
                 toggleSort={toggleSort}
@@ -26,6 +27,6 @@ export const MainTodo: React.FC<Props> = ({ handleOpenModal }) => {
                 toggleToolbarTodo={toggleSort}
                 handleOpenModal={handleOpenModal}
             />
-        </div>
+        </Box>
     );
 };

@@ -40,6 +40,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
         transition: 'left 1.5s ease, opacity 0.3s ease-out',
     },
+    box: {
+        boxSizing: 'border-box',
+        padding: '4px',
+        width: '100%',
+        height: '100%',
+        position: 'relative',
+        [theme.breakpoints.down('xs')]: {
+            padding: 0,
+        },
+    },
 }));
 
 export const Home: React.FC = () => {
@@ -63,25 +73,12 @@ export const Home: React.FC = () => {
                         lg={8}
                         className={classes.gridItem}
                     >
-                        <Box
-                            boxSizing='border-box'
-                            p='4px'
-                            width={1}
-                            height={1}
-                            component='section'
-                        >
+                        <Box className={classes.box} component='section'>
                             <Calendar />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={12} lg={4}>
-                        <Box
-                            p='4px'
-                            boxSizing='border-box'
-                            height={1}
-                            width={1}
-                            component='section'
-                            position='relative'
-                        >
+                        <Box className={classes.box} component='section'>
                             <Calendar isLayerCalendar={isLayerCalendar} />
                             <TodoList isLayerCalendar={isLayerCalendar} />
                             <Box className={classes.switch}>

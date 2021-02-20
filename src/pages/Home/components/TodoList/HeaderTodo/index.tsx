@@ -29,9 +29,6 @@ export const HeaderTodo: React.FC = () => {
             <Box className={classes.root}>
                 <Box className={classes.boxLeft}>
                     <SettingTodo />
-                    <IconButton size='small'>
-                        <NotificationsNoneIcon />
-                    </IconButton>
                 </Box>
                 <Box>
                     <AvatarTodo />

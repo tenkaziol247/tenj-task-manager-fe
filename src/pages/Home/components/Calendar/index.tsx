@@ -25,11 +25,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderRadius: 12,
         width: '100%',
         height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
         padding: theme.spacing(3),
         boxSizing: 'border-box',
         [theme.breakpoints.down('xs')]: {
             padding: '56px 0',
+            borderRadius: 0,
         },
     },
     table: {

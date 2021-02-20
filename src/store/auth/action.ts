@@ -122,10 +122,16 @@ export const login = (data: IDataLoginAccount) => {
 //logout
 export const logout = () => {
     return async (dispatch: Dispatch<IAuthClearState>) => {
-        await userApi.logoutAccount();
-        localStorage.removeItem('uid');
-        localStorage.removeItem('token');
-        dispatch(authClearState());
+        try {
+            await userApi.logoutAccount();
+            localStorage.removeItem('uid');
+            localStorage.removeItem('token');
+            dispatch(authClearState());
+        } catch (error) {
+            localStorage.removeItem('uid');
+            localStorage.removeItem('token');
+            dispatch(authClearState());
+        }
     };
 };
 

@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: '100%',
         boxSizing: 'border-box',
         padding: '4px',
+        [theme.breakpoints.down('xs')]: {
+            padding: 0,
+        },
     },
     content__container: {
         height: '100%',
@@ -47,6 +50,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundColor: theme.palette.background.default,
         [theme.breakpoints.down('md')]: {
             padding: '20px',
+        },
+        [theme.breakpoints.down('xs')]: {
+            borderRadius: 0,
         },
     },
 }));

@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 12,
         backgroundColor: theme.palette.background.default,
         position: 'relative',
+        [theme.breakpoints.down('xs')]: {
+            borderRadius: 0,
+        },
     },
     button: {
         position: 'absolute',

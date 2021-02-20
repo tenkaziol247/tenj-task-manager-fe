@@ -7,27 +7,16 @@ export const generateBackground = () => {
         'background--fall',
         'background--winter',
     ];
-    const now = moment().month();
+    const now = moment().hour();
     let background: string;
-    switch (now) {
-        case 0:
-        case 1:
-        case 2:
-            background = arr[0];
-            break;
-        case 3:
-        case 4:
-        case 5:
-            background = arr[1];
-            break;
-        case 6:
-        case 7:
-        case 8:
-            background = arr[2];
-            break;
-        default:
-            background = arr[3];
-            break;
+    if (now >= 0 && now < 6) {
+        background = arr[0];
+    } else if (now < 12) {
+        background = arr[1];
+    } else if (now < 18) {
+        background = arr[2];
+    } else {
+        background = arr[3];
     }
     return background;
 };

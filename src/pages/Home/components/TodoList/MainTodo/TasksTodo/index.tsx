@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, makeStyles, Theme } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         position: 'relative',
         margin: '0px 4px 16px 20px',
         overflow: 'hidden',
+        maxHeight: '100%',
+        height: '100%',
     },
     roller: {
         overflowY: 'auto',
@@ -93,13 +95,13 @@ export const TasksTodo: React.FC<Props> = ({
     };
 
     return (
-        <Box className={classes.tasksTodo}>
+        <div className={classes.tasksTodo}>
             <Box className={classes.layerAction}>
                 <ToolbarTodo />
             </Box>
             <Box className={classes.roller}>
                 {loading ? (
-                    <Box height={1} display='flex' alignItems='center'>
+                    <Box height={1} position='relative'>
                         <Ellipse />
                     </Box>
                 ) : (
@@ -107,6 +109,6 @@ export const TasksTodo: React.FC<Props> = ({
                 )}
             </Box>
             <Box className={classes.layerBottom}></Box>
-        </Box>
+        </div>
     );
 };

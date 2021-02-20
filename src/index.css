@@ -40,9 +40,15 @@ main {
     height: 560px;
     margin: auto;
     box-sizing: border-box;
-    border-radius: 12px;
     box-shadow: -3px 3px 8px 3px rgba(0, 0, 0, 0.2);
     overflow: hidden;
+}
+
+@media screen and (max-width: 576px) {
+    main {
+        border-radius: 0;
+        box-shadow: unset;
+    }
 }
 
 .avatar--default {
